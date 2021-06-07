@@ -1,4 +1,4 @@
 rootProject.name = 'MultiChiefWeb'
 include 'MultiChiefAuth'
-include 'Frontend'
+
 
