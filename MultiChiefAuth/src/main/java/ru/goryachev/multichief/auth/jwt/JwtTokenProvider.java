@@ -1,14 +1,18 @@
 package ru.goryachev.multichief.auth.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 
 public class JwtTokenProvider {
 
+    @Value("${jwt.secret}")
     private String secretKey;
+    @Value("${jwt.expiration}")
     private long validityPeriod; //milliseconds
 
     public String createToken (String app_user_name, String role) {
@@ -23,6 +27,11 @@ public class JwtTokenProvider {
                 .setExpiration(expireDate)
                 .signWith(SignatureAlgorithm.HS256, "gelsingforse")
                 .compact();
+    }
+
+    public boolean validateToken (String token) {
+        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        return !claimsJws.getBody().getExpiration().before(new Date());
     }
 
 }
