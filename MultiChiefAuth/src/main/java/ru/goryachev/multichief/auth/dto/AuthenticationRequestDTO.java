@@ -28,13 +28,13 @@ public class AuthenticationRequestDTO {
         if (this == o) return true;
         if (!(o instanceof AuthenticationRequestDTO)) return false;
         AuthenticationRequestDTO that = (AuthenticationRequestDTO) o;
-        return name.equals(that.name) &&
-                password.equals(that.password);
+        return Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getPassword(), that.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, password);
+        return Objects.hash(getName(), getPassword());
     }
 
     @Override
