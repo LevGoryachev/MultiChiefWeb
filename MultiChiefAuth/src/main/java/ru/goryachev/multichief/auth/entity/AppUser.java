@@ -18,13 +18,13 @@ public class AppUser {
     private String password;
 
     @Column(name = "email")
-    private String email ;
+    private String email;
 
     @Column(name = "role_id")
     private Long role_id;
 
     @Column(name = "status")
-    private String status ;
+    private String status;
 
     public Long getId() {
         return id;
