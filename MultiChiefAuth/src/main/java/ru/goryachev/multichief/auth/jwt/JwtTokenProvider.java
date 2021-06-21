@@ -11,12 +11,16 @@ import java.util.Date;
 
 public class JwtTokenProvider {
 
+    private UserDetails userDetails;
+
     @Value("${jwt.secret}")
     private String secretKey;
     @Value("${jwt.expiration}")
     private long validityPeriod; //milliseconds
 
-    UserDetails userDetails;
+    public JwtTokenProvider(UserDetails userDetails) {
+        this.userDetails = userDetails;
+    }
 
     protected void init (){
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());

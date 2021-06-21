@@ -20,9 +20,6 @@ public class AppUser {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "role_id")
-    private Long role_id;
-
     @Column(name = "status")
     private String status;
 
@@ -58,14 +55,6 @@ public class AppUser {
         this.email = email;
     }
 
-    public Long getRole_id() {
-        return role_id;
-    }
-
-    public void setRole_id(Long role_id) {
-        this.role_id = role_id;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -83,13 +72,12 @@ public class AppUser {
                 Objects.equals(getLogin(), appUser.getLogin()) &&
                 Objects.equals(getPassword(), appUser.getPassword()) &&
                 Objects.equals(getEmail(), appUser.getEmail()) &&
-                Objects.equals(getRole_id(), appUser.getRole_id()) &&
                 Objects.equals(getStatus(), appUser.getStatus());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getLogin(), getPassword(), getEmail(), getRole_id(), getStatus());
+        return Objects.hash(getId(), getLogin(), getPassword(), getEmail(), getStatus());
     }
 
     @Override
@@ -99,7 +87,6 @@ public class AppUser {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", role_id=" + role_id +
                 ", status='" + status + '\'' +
                 '}';
     }

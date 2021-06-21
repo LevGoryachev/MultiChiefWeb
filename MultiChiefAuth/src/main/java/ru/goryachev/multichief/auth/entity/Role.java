@@ -11,8 +11,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "rank")
-    private String rank;
+    @Column(name = "role_name")
+    private String role_name;
 
     public Long getId() {
         return id;
@@ -22,12 +22,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getRank() {
-        return rank;
+    public String getRole_name() {
+        return role_name;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void setRole_name(String role_name) {
+        this.role_name = role_name;
     }
 
     @Override
@@ -36,19 +36,19 @@ public class Role {
         if (!(o instanceof Role)) return false;
         Role role = (Role) o;
         return Objects.equals(getId(), role.getId()) &&
-                Objects.equals(getRank(), role.getRank());
+                Objects.equals(getRole_name(), role.getRole_name());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRank());
+        return Objects.hash(getId(), getRole_name());
     }
 
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
-                ", rank='" + rank + '\'' +
+                ", role_name='" + role_name + '\'' +
                 '}';
     }
 }
