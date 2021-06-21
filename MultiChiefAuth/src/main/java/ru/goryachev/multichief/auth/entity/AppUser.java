@@ -2,6 +2,7 @@ package ru.goryachev.multichief.auth.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table (name = "app_user")
@@ -22,6 +23,11 @@ public class AppUser {
 
     @Column(name = "status")
     private String status;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "app_user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
 
     public Long getId() {
         return id;
@@ -61,6 +67,14 @@ public class AppUser {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

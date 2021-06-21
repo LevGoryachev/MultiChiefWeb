@@ -1,7 +1,11 @@
 package ru.goryachev.multichief.auth.entity;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "role")
@@ -13,6 +17,10 @@ public class Role {
 
     @Column(name = "role_name")
     private String role_name;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "role_perm", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private Set<Permission> permissions;
 
     public Long getId() {
         return id;
@@ -28,6 +36,20 @@ public class Role {
 
     public void setRole_name(String role_name) {
         this.role_name = role_name;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
+    public Set<SimpleGrantedAuthority> getAuthorities() {
+        return getPermissions().stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getPerm_name()))
+                .collect(Collectors.toSet());
     }
 
     @Override
