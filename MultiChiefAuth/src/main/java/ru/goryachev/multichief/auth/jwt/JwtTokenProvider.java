@@ -1,25 +1,33 @@
 package ru.goryachev.multichief.auth.jwt;
 
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
+@Component
 public class JwtTokenProvider {
 
-    private UserDetails userDetails;
+    private UserDetailsService userDetailsService;
 
+    @Value("${jwt.header}")
+    private String header;
     @Value("${jwt.secret}")
     private String secretKey;
     @Value("${jwt.expiration}")
     private long validityPeriod; //milliseconds
 
-    public JwtTokenProvider(UserDetails userDetails) {
-        this.userDetails = userDetails;
+    public JwtTokenProvider(@Qualifier("appUserDetailsService") UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     protected void init (){
@@ -50,11 +58,16 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication (String token){
-        return null;
+        UserDetails userDetails = userDetailsService.loadUserByUsername(getAppUserName(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     public String getAppUserName (String token){
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public String resolveToken (HttpServletRequest request) {
+        return request.getHeader("authorizationHeader");
     }
 
 }
