@@ -9,10 +9,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import ru.goryachev.multichief.auth.entity.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Set;
 
 @Component
 public class JwtTokenProvider {
@@ -34,9 +36,9 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken (String app_user_name, String role) {
+    public String createToken (String app_user_name, Set<Role> roles) {
         Claims claims = Jwts.claims().setSubject(app_user_name);
-        claims.put("role", role);
+        claims.put("roles", roles);
         Date nowDate = new Date();
         Date expireDate = new Date(nowDate.getTime() + validityPeriod * 1000);
 
