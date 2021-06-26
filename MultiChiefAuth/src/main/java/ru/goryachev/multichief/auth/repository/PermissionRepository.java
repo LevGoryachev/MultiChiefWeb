@@ -2,10 +2,8 @@ package ru.goryachev.multichief.auth.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.goryachev.multichief.auth.entity.Role;
-
-import java.util.Optional;
+import ru.goryachev.multichief.auth.entity.Permission;
 
 @Repository
-public interface RoleRepository extends JpaRepository <Role, Long> {
+public interface PermissionRepository extends JpaRepository <Permission, Long> {
 }

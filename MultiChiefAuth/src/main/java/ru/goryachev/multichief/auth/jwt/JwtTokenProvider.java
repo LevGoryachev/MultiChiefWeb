@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import ru.goryachev.multichief.auth.entity.Role;
+import ru.goryachev.multichief.auth.service.AppUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Component
 public class JwtTokenProvider {
 
-    private UserDetailsService userDetailsService;
+    private AppUserDetailsService userDetailsService;
 
     @Value("${jwt.header}")
     private String header;
@@ -28,7 +29,7 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}")
     private long validityPeriod; //milliseconds
 
-    public JwtTokenProvider(@Qualifier("appUserDetailsService") UserDetailsService userDetailsService) {
+    public JwtTokenProvider(@Qualifier("appUserDetailsService") AppUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
