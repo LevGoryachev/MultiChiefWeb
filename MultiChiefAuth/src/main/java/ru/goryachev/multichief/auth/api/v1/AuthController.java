@@ -1,5 +1,6 @@
 package ru.goryachev.multichief.auth.api.v1;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,7 @@ public class AuthController {
     private AppUserRepository appUserRepository;
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
     public AuthController(AuthenticationManager authenticationManager, AppUserRepository appUserRepository, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.appUserRepository = appUserRepository;
