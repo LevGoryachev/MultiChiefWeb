@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
-import ru.goryachev.multichief.auth.api.v1.AuthController;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -31,13 +31,25 @@ public class JwtTokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
+
+        String y = token;
+
         logger.trace("JwtTokenFilter, doFilter");
+
+        Boolean b = jwtTokenProvider.validateToken(token);
+        Boolean c = b;
+
         try {
             if (token != null && jwtTokenProvider.validateToken(token)) {
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);
                 if (authentication != null) {
+                    //Authentication a = authentication;
+                    //Authentication authb = a;
                     SecurityContextHolder.getContext().setAuthentication(authentication);
+                    //SecurityContext context = SecurityContextHolder.getContext();
+                    //SecurityContext cb = context;
                 }
             }
         } catch (JwtAuthException e) {
