@@ -1,5 +1,7 @@
 package ru.goryachev.multichief.auth.api.v1;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.goryachev.multichief.auth.dto.AuthenticationRequestDTO;
 import ru.goryachev.multichief.auth.entity.AppUser;
+import ru.goryachev.multichief.auth.entity.Role;
 import ru.goryachev.multichief.auth.jwt.JwtTokenProvider;
 import ru.goryachev.multichief.auth.repository.AppUserRepository;
 
@@ -21,10 +24,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
+
+    Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final AuthenticationManager authenticationManager;
     private AppUserRepository appUserRepository;
@@ -38,18 +44,29 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate (@RequestBody AuthenticationRequestDTO requestDTO) {
-        try {
+    public ResponseEntity<Object> authenticate (@RequestBody AuthenticationRequestDTO requestDTO) {
+        AuthenticationRequestDTO x = requestDTO;
+        logger.info("1 An INFO Message from LoginController");
+
+       try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDTO.getName(), requestDTO.getPassword()));
             AppUser user = appUserRepository.findByLogin(requestDTO.getName()).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
+
+
+
+           Set<Role> roles = user.getRoles();
+
             String token = jwtTokenProvider.createToken(requestDTO.getName(), user.getRoles());
             Map<Object, Object> response = new HashMap<>();
             response.put("login", requestDTO.getName());
             response.put("token", token);
+            logger.info("2 An INFO Message from LoginController");
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e){
+            logger.info("3 An INFO Message from LoginController");
             return new ResponseEntity<>("Invalid login/password combination", HttpStatus.FORBIDDEN);
         }
+
     }
 
 
