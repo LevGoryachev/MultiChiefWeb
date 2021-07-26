@@ -45,16 +45,14 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> authenticate (@RequestBody AuthenticationRequestDTO requestDTO) {
-        AuthenticationRequestDTO x = requestDTO;
-        logger.info("1 An INFO Message from LoginController");
+        AuthenticationRequestDTO x = requestDTO;// Debugger -to delete
+        logger.info("AuthController");
 
        try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDTO.getName(), requestDTO.getPassword()));
             AppUser user = appUserRepository.findByLogin(requestDTO.getName()).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
 
-
-
-           Set<Role> roles = user.getRoles();
+           Set<Role> roles = user.getRoles();// Debugger -to delete
 
             String token = jwtTokenProvider.createToken(requestDTO.getName(), user.getRoles());
             Map<Object, Object> response = new HashMap<>();

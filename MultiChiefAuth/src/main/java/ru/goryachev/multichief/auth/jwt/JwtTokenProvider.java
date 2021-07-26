@@ -1,13 +1,14 @@
 package ru.goryachev.multichief.auth.jwt;
 
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import ru.goryachev.multichief.auth.entity.Role;
 import ru.goryachev.multichief.auth.service.AppUserDetailsService;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Component
+@PropertySource("classpath:application.properties")
 public class JwtTokenProvider {
 
     private AppUserDetailsService userDetailsService;
@@ -29,6 +31,7 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}")
     private long validityPeriod; //milliseconds
 
+    @Autowired
     public JwtTokenProvider(@Qualifier("appUserDetailsService") AppUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
@@ -61,6 +64,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication (String token){
+        String c = token;
         UserDetails userDetails = userDetailsService.loadUserByUsername(getAppUserName(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
@@ -70,7 +74,12 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken (HttpServletRequest request) {
-        return request.getHeader("authorizationHeader");
-    }
+        String bearerToken = request.getHeader("Authorization");
+        if(bearerToken != null && bearerToken.startsWith("Bearer ")){
+            return  bearerToken.substring(7, bearerToken.length());
+        }
+        return null;
 
+        //return request.getHeader("authorizationHeader");
+    }
 }

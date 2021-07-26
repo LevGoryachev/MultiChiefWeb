@@ -47,9 +47,7 @@ public class Role {
     }
 
     public Set<SimpleGrantedAuthority> getAuthorities() {
-        return getPermissions().stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.getPerm_name()))
-                .collect(Collectors.toSet());
+        return getPermissions().stream().map(permission -> new SimpleGrantedAuthority(permission.getPerm_name())).collect(Collectors.toSet());
     }
 
     @Override

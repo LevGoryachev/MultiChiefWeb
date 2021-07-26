@@ -16,34 +16,35 @@ public class AdminController {
     Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @GetMapping("/")
-    //@PreAuthorize("hasAuthority('all_read')")
+    @PreAuthorize("hasAuthority('all_read')")
     public ResponseEntity<List<AppUser>> getAllUsers () {
-        logger.info("An INFO Message from AdminController");
+        logger.info("AdminController: getAllUsers()");
     return null;
     }
 
     @GetMapping("/{id}")
-    //@PreAuthorize("hasAuthority('all_read')")
+    @PreAuthorize("hasAuthority('all_read')")
     public ResponseEntity<AppUser> getById (@PathVariable Long id) {
+        Long f = id;
+        logger.info("AdminController: getById()");
         return null;
     }
 
     @PostMapping("/")
-    //@PreAuthorize("hasAuthority('all_create')")
+    @PreAuthorize("hasAuthority('all_create')")
     public ResponseEntity<AppUser> createUser () {
         return null;
     }
 
     @PutMapping("/{id}")
-    //@PreAuthorize("hasAuthority('all_update')")
+    @PreAuthorize("hasAuthority('all_update')")
     public ResponseEntity<AppUser> updateUser (@PathVariable Long id) {
         return null;
     }
 
     @DeleteMapping("/{id}")
-    //@PreAuthorize("hasAuthority('all_delete')")
+    @PreAuthorize("hasAuthority('all_delete')")
     public ResponseEntity<AppUser> deleteUser (@PathVariable Long id) {
         return null;
     }
-
 }
