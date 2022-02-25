@@ -31,14 +31,19 @@ export default function Home() {
             <p>Construction site service (microservice).</p>
           </a>
 
-          <a href="https://github.com/LevGoryachev/MultiChiefInventory" className={styles.card}>
-          <h2>MultiChiefInventory &rarr;</h2>
-          <p>Material resourse service (microservice).</p>
+          <a href="https://github.com/LevGoryachev/ForGeo" className={styles.card}>
+            <h2>ForGeo</h2>
+            <p>Location web-service.</p>
           </a>
 
-          <a href="https://github.com/LevGoryachev/ForGeo" className={styles.card}>
-            <h2>ForGeo &rarr;</h2>
-            <p>Location web-service.</p>
+          <a href="https://github.com/LevGoryachev/PollingService" className={styles.card}>
+            <h2>PollingService &rarr;</h2>
+            <p>Polls (microservice).</p>
+          </a>
+
+          <a href="https://github.com/LevGoryachev/MultiChiefInventory" className={styles.card}>
+            <h2>MultiChiefInventory &rarr;</h2>
+            <p>Material resourse service (microservice).</p>
           </a>
 
           <a href="https://github.com/LevGoryachev/MultiChiefStaff" className={styles.card}>
