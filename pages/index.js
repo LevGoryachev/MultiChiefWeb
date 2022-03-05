@@ -17,8 +17,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          ERP system for construction industry
         </p>
 
         <div className={styles.grid}>
@@ -29,19 +28,34 @@ export default function Home() {
 
           <a href="https://github.com/LevGoryachev/MultiChiefConstruction" className={styles.card}>
             <h2>MultiChiefConstruction &rarr;</h2>
-            <p>Construction site service (microservice)</p>
+            <p>Construction site service (microservice).</p>
           </a>
 
-          <a
-            href="https://github.com/LevGoryachev/MultiChiefInventory" className={styles.card}>
+          <a href="https://github.com/LevGoryachev/ForGeo" className={styles.card}>
+            <h2>ForGeo</h2>
+            <p>Location web-service.</p>
+          </a>
+
+          <a href="https://github.com/LevGoryachev/PollingService" className={styles.card}>
+            <h2>PollingService &rarr;</h2>
+            <p>Polls (microservice).</p>
+          </a>
+
+          <a href="https://github.com/LevGoryachev/MultiChiefInventory" className={styles.card}>
             <h2>MultiChiefInventory &rarr;</h2>
             <p>Material resourse service (microservice).</p>
           </a>
+
+          <a href="https://github.com/LevGoryachev/MultiChiefStaff" className={styles.card}>
+            <h2>MultiChiefStaff &rarr;</h2>
+            <p>Staff management service (microservice).</p>
+          </a>
+
         </div>
       </main>
 
       <footer className={styles.footer}>
-        
+
       </footer>
     </div>
   )
